@@ -12,6 +12,9 @@ publish:
     - conda install -y conda-build conda-pack python=${PYTHON_VERSION}
     - conda build ${PACKAGE_NAME}
     - conda create -y -n spark_env python=${PYTHON_VERSION}
+    # Needed to switch envs
+    - conda init bash
+    - source ~/.bashrc
     - conda activate spark_env
     - conda install --use-local -y ${PACKAGE_NAME}
     - conda activate base
