@@ -1,0 +1,22 @@
+stages:
+  - publish
+
+variables:
+  PYTHON_VERSION: "3.8"
+  PACKAGE_NAME: hello_conda
+
+publish:
+  stage: publish
+  image: continuumio/miniconda3:4.10.3
+  script:
+    - conda install -y conda-build conda-pack python=${PYTHON_VERSION}
+    - conda build ${PACKAGE_NAME}
+    - conda deactivate
+    - conda create -y -n spark_env python=${PYTHON_VERSION}
+    - conda install --use-local -y ${PACKAGE_NAME}
+    - conda deactivate
+    - conda activate
+    - conda pack -o spark_env.tar.gz -j -1 -n spark_env
+  artifacts:
+    paths:
+      - spark_env.tar.gz

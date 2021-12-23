@@ -1,0 +1,23 @@
+{% set name = "hello_conda" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  path: ../src
+
+build:
+  number: 0
+  script: "ls -R && {{ PYTHON }} -m pip install . --no-deps --ignore-installed"
+  # script: "echo '**********************' && ls -R"
+
+requirements:
+  host:
+    - pip
+    - python
+    - requests
+  run:
+    - python
+    - requests
