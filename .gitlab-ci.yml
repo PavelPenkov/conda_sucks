@@ -11,11 +11,10 @@ publish:
   script:
     - conda install -y conda-build conda-pack python=${PYTHON_VERSION}
     - conda build ${PACKAGE_NAME}
-    - conda deactivate
     - conda create -y -n spark_env python=${PYTHON_VERSION}
+    - conda activate spark_env
     - conda install --use-local -y ${PACKAGE_NAME}
-    - conda deactivate
-    - conda activate
+    - conda activate base
     - conda pack -o spark_env.tar.gz -j -1 -n spark_env
   artifacts:
     paths:
